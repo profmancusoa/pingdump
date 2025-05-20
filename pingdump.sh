@@ -3,20 +3,21 @@
 # Developed with support from chatGPT
 
 usage() {
-  echo "Usage: $0 <cycle> <period> <target IP> <# packets> <max timeout> <outfile>"
-  echo "Example: $0 100 30 1.1.1.1 3 2 dump.csv"
+  echo "Usage: $0 <cycle> <period> <target IP> <# packets> <packet size> <max timeout> <outfile>"
+  echo "Example: $0 100 30 1.1.1.1 3 128 2 dump.csv"
   exit 1
 }
 
-[ $# -eq 6 ] || usage
+[ $# -eq 7 ] || usage
 
 # Params
 cycle=$1
 period=$2
 target=$3
 packets=$4
-timeout=$5
-outfile=$6
+packet_size=$5
+timeout=$6
+outfile=$7
 
 # If file doesnt exists, create the header
 if [ ! -s "$outfile" ]; then
@@ -26,7 +27,7 @@ fi
 # Ping loop
 for (( i=1; i<=cycle; i++ )); do
   start_ns=$(date +%s%N)
-  raw=$(ping -c "$packets" -W "$timeout" "$target" 2>/dev/null)
+  raw=$(ping -c "$packets" -s ""$packet_size -W "$timeout" "$target" 2>/dev/null)
   end_ns=$(date +%s%N)
   
   # calculate timestamp as the average between start and end time

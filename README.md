@@ -6,14 +6,14 @@ Simple tool to dump ping information
 # Usage
 
 ```bash
-Usage: ./pingdump.sh <cycle> <period> <target IP> <# packets> <max timeout> <outfile>
+Usage: ./pingdump.sh <cycle> <period> <target IP> <# packets> <packet size> <max timeout> <outfile>
 
-Example: ./pingdump.sh 100 30 1.1.1.1 3 2 dump.csv
+Example: ./pingdump.sh 100 30 1.1.1.1 3 128 2 dump.csv
 ```
 
 - Perform a total of 100 (cycle), one every 30(period) seconds.
 
-- Each cycle it pings 1.1.1.1 (target IP) by sending 3 (# packets) packets with a timeout of 2(max timeout) seconds.
+- Each cycle it pings 1.1.1.1 (target IP) by sending 3 (# packets) packets with a timeout of 2(max timeout) seconds and a size of 128 bytes(packet size) (there are 8 additional bytes of ICMP header).
 
 - Each ping is dumped on outfile
 
